@@ -1,7 +1,7 @@
 <script>
     import { Navbar, NavBrand, NavLi, NavUl, NavHamburger } from 'flowbite-svelte';
     import { Footer, FooterLinkGroup, FooterLink, ImagePlaceholder, TextPlaceholder, Skeleton, FooterCopyright, FooterBrand } from 'flowbite-svelte'
-    import logo from '$lib/images/MCO_logo.png';
+    import logo from '$lib/images/MCO_logo_icon_only.png';
     import "../app.postcss";
 
     let toggle;
@@ -11,7 +11,7 @@
 <Navbar let:hidden let:toggle rounded color="form">
 <NavBrand href="/">
     <img src={logo} class="mr-3 h-6 sm:h-9" alt="MCO Logo" />
-    <span class="self-center whitespace-nowrap text-xl font-semibold dark:text-white">MCO Climate Data Explorer</span>
+    <span class="self-center whitespace-nowrap text-xl font-semibold dark:text-white">Montana Mesonet</span>
 </NavBrand>
 <NavHamburger on:click={toggle} />
 <NavUl {hidden}>
