@@ -1,53 +1,33 @@
 <script>
-	import Header from './Header.svelte';
-	import './styles.css';
+    import { Navbar, NavBrand, NavLi, NavUl, NavHamburger } from 'flowbite-svelte';
+    import { Footer, FooterLinkGroup, FooterLink, ImagePlaceholder, TextPlaceholder, Skeleton, FooterCopyright, FooterBrand } from 'flowbite-svelte'
+    import logo from '$lib/images/MCO_logo.png';
+    import "../app.postcss";
+
+    let toggle;
+    let hidden;
 </script>
 
-<div class="app">
-	<Header />
+<Navbar let:hidden let:toggle rounded color="form">
+<NavBrand href="/">
+    <img src={logo} class="mr-3 h-6 sm:h-9" alt="MCO Logo" />
+    <span class="self-center whitespace-nowrap text-xl font-semibold dark:text-white">MCO Climate Data Explorer</span>
+</NavBrand>
+<NavHamburger on:click={toggle} />
+<NavUl {hidden}>
+    <!-- <NavLi href="/" active={true}>Home</NavLi> -->
+    <NavLi href="/historical">Historical Trends</NavLi>
+    <NavLi href="/future">Climate Projections</NavLi>
+    <NavLi href="/report">Generate Report</NavLi>
+</NavUl>
+</Navbar>
 
-	<main>
-		<slot />
-	</main>
 
-	<footer>
-		<p>visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to learn SvelteKit</p>
-	</footer>
+<Footer class="absolute bottom-0 left-0 z-20 w-full">
+    This project sponsored by x, y, z.
+</Footer>
+
+<div class="container">
+<!-- This is where the content of each page will be rendered -->
+<slot></slot>
 </div>
-
-<style>
-	.app {
-		display: flex;
-		flex-direction: column;
-		min-height: 100vh;
-	}
-
-	main {
-		flex: 1;
-		display: flex;
-		flex-direction: column;
-		padding: 1rem;
-		width: 100%;
-		max-width: 64rem;
-		margin: 0 auto;
-		box-sizing: border-box;
-	}
-
-	footer {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		padding: 12px;
-	}
-
-	footer a {
-		font-weight: bold;
-	}
-
-	@media (min-width: 480px) {
-		footer {
-			padding: 12px 0;
-		}
-	}
-</style>
