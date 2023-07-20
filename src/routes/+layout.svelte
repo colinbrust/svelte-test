@@ -38,10 +38,8 @@
 </NavUl>
 </Navbar>
 
-<div class="bg-gray-500 w-full mx-0">
-    <!-- This is where the content of each page will be rendered -->
+
     <slot></slot>
-</div>
 
 
 <Footer footerType="socialmedia" class="bg-gray-200 w-full">

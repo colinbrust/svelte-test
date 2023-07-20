@@ -36,12 +36,9 @@
 
     export let data: PageData;
 </script>
+<h1 class="text-xl bg-gray-200 p-4 w-full text-center">Mesonet Stations</h1>
 
-<div>
-    <h1>Here are the mesonet stations!</h1>
-</div>
-
-<div id="map" style="height: 40vh; width: 40vw">
+<div style="height: 50vh; width: 60vw" class="bg-white p-4 border border-gray-300 rounded-lg mt-4">
     {#if browser}
         <LeafletMap options={mapOptions}>
             <TileLayer url={tileUrl} options={tileLayerOptions}/>
