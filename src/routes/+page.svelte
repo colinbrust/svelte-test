@@ -41,7 +41,7 @@
     <h1>Here are the mesonet stations!</h1>
 </div>
 
-<div id="map" style="height: 80vh;">
+<div id="map" style="height: 40vh; width: 40vw">
     {#if browser}
         <LeafletMap options={mapOptions}>
             <TileLayer url={tileUrl} options={tileLayerOptions}/>
