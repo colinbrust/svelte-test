@@ -1,12 +1,66 @@
-<script>
-    import LeafletMap from '$lib/LeafletMap.svelte';
+<script lang='ts'>
+    import type { PageData } from './$types';
+    import { browser } from '$app/environment';
+    import {LeafletMap, TileLayer, Marker, Popup} from 'svelte-leafletjs?client';
+    import 'leaflet/dist/leaflet.css'
+
+    const mapOptions = {
+        center: [47, -107.5],
+        zoom: 7,
+        scrollWheelZoom: false,
+    };
+    const tileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+    const tileLayerOptions = {
+        minZoom: 0,
+        maxZoom: 20,
+        maxNativeZoom: 19,
+        attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    };
+
+    // onMount(async () => {
+    //     if (browser) {
+    //         const leaflet = await import('svelte-leafletjs');
+    //         const mapOptions = {
+    //             center: [1.364917, 103.822872],
+    //             zoom: 11,
+    //         };
+    //         const tileUrl = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
+    //         const tileLayerOptions = {
+    //             minZoom: 0,
+    //             maxZoom: 20,
+    //             maxNtiveZoom: 19,
+    //             attribution: "© OpenStreetMap contributors",
+    //         };
+    //     }
+    // })
+
+    export let data: PageData;
 </script>
 
 <div>
     <h1>Here are the mesonet stations!</h1>
 </div>
+
+<div id="map" style="height: 80vh;">
+    {#if browser}
+        <LeafletMap options={mapOptions}>
+            <TileLayer url={tileUrl} options={tileLayerOptions}/>
+            {#each data.data as station}
+                <Marker latLng={[station.latitude, station.longitude]}>
+                    <Popup>
+                        <b>Station:</b> {station.name}<br>
+                        <b>Network:</b> {station.sub_network}<br>
+                        <b>Lat, Lon: </b> {station.latitude}, {station.longitude}<br>
+                        <b>Elevation: </b> {station.elevation}<br>
+                        <b><a href="https://mesonet.climate.umt.edu/dash/{station.station}" target="_blank">Dashboard Link</a></b> 
+                </Popup>
+                </Marker>
+            {/each}
+        </LeafletMap>
+    {/if}
+</div>
+
 <main>
-    <LeafletMap />
 </main>
 
 <!-- Add your home page content here -->

@@ -1,6 +1,7 @@
 <script lang='ts'>
     import { onMount, onDestroy } from 'svelte';
     import { browser } from '$app/environment';
+    import { mapStore } from '../MapStore';
 
     let mapElement: any;
     let map: any;
@@ -23,6 +24,8 @@
             leaflet.marker([47, -107.5]).addTo(map)
                 .bindPopup('This is Montana!')
                 .openPopup();
+
+            mapStore.set(map);
         }
     });
 

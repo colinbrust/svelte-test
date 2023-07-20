@@ -20,7 +20,6 @@ export const load = (async () => {
         data.forEach((station: StationRecord) => {
             station.link = "https://mesonet.climate.umt.edu/dash/" + station.station
         });
-        console.log(data);
         return { data };
     }
     return   {};
