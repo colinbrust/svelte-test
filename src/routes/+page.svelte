@@ -6,6 +6,7 @@
     import {LeafletMap, TileLayer, Marker, Popup, Icon, Tooltip} from 'svelte-leafletjs?client';
     import 'leaflet/dist/leaflet.css'
     import AnimatedElement from './AnimatedElement.svelte';
+    import logo from '$lib/images/marker.png';
 
     const mapOptions = {
         center: [47, -109.5],
@@ -19,41 +20,21 @@
         maxNativeZoom: 19,
         attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     };
-    let ready = false;
-    onMount(() => ready = true);
-    function fadeSlide(node: any, options: any) {
-		const slideTrans = slide(node, options)
-		return {
-			duration: options.duration,
-			css: t => `
-				${slideTrans.css(t)}
-				opacity: ${t};
-			`
-		};
-	}
+    const iconOptions = {
+        iconUrl: logo,
+        iconSize: [10, 10],
+        // iconAnchor: [0, 0],
+        popupAnchor: [0, -30],
+        // tooltipAnchor: [16. -28],
+    };
 
     export let data: PageData;
 
-    // const observer = new IntersectionObserver((entries) => {
-    //     entries.forEach((entry) => {
-    //         console.log(entry);
-    //         if (entry.isIntersecting) {
-    //             entry.target.classList.add('show');
-    //         } else {
-    //             entry.target.classList.remove('show');
-    //         }
-    //     });
-    // });
-    // const hiddenItems = document.querySelectorAll(".hidden");
-    // hiddenItems.forEach((el) => observer.observe(el));
 
 </script>
 
-<div style="height: 50vh;" class="flex justify-center items-center bg-gray-200">
-{#if ready}
-<div style="height: 100%;" class="flex flex-col items-center bg-white p-4 border border-gray-300 rounded-lg mt-4 w-5/12" transition:fadeSlide="{{duration: 1000}}">
-    <!-- <h1 class="text-xl p-4 text-center">Mesonet Stations</h1> -->
-    <div style="height: 100%; width: 100%" class="">
+<div class="grid lg:grid-cols-2">
+    <div style="height: 50vh; width: 90%" class="mx-auto flex justify-center items-center bg-white p-4 border border-gray-300 rounded-lg mt-4 w-5/12">
         {#if browser}
             <LeafletMap options={mapOptions}>
                 <TileLayer url={tileUrl} options={tileLayerOptions}/>
@@ -65,16 +46,25 @@
                             <b>Lat, Lon: </b> {station.latitude}, {station.longitude}<br>
                             <b>Elevation: </b> {station.elevation}<br>
                             <b><a href="https://mesonet.climate.umt.edu/dash/{station.station}" target="_blank">Dashboard Link</a></b> 
-                    </Popup>
-                    <Tooltip><b>{station.name}</b></Tooltip>
+                        </Popup>
+                        <Tooltip><b>{station.name}</b></Tooltip>
+                        <Icon options={iconOptions}/>
                     </Marker>
                 {/each}
             </LeafletMap>
         {/if}
     </div>
+    <div style="height: 50vh; width: 90%" class="mx-auto flex flex-col justify-center items-center bg-white p-4 border border-gray-300 rounded-lg mt-4 w-5/12">
+        <h1 class="text-center text-4xl text-red-800 mb-4">Explore the Mesonet</h1>
+        <p class="text-left hero">
+            The Montana Mesonet is currently comprised of {data.data.length} stations, with more being added each year. 
+        </p>
+    </div>
+    
+    
+    <!-- Add more alternating text blocks as needed -->
 </div>
-{/if}
-</div>
+  
 
 <div class="main">
       <div class="full-height hero">
@@ -86,7 +76,8 @@
             million dollars in statewide savings each year. Whether for irrigated and dryland agriculture, grazing, water 
             supply, or natural resource management too few stations exist to measure meteorological and soil moisture 
             information at the same location to support decision-making based upon local conditions.`}
-            heading={"Background"}/>
+            heading={"Background"}
+            renderAnyways={true}/>
       </div>
       <div class="full-height hero">
         <AnimatedElement 
@@ -126,27 +117,39 @@
 
 <style>
     :root {
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
-        Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        background-color: slategray;
+    }
+    .main {
+        text-align: center;
+        padding: 0 1em;
+        margin: 0 auto;
     }
 
-  .main {
-    text-align: center;
-    padding: 0 1em;
-    margin: 0 auto;
-  }
+    .hero {
+        height: calc(100vh - 16px);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+            Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    }
 
-  .hero {
-    height: calc(100vh - 16px);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
+    /* Set the height of .full-height class based on screen size */
+    .full-height {
+        height: 40vh; /* Default height for larger screens */
+        display: flex;
+        justify-content: center;
+    }
 
-  .full-height {
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-  }
+    /* Media query for smaller screens */
+    @media screen and (max-width: 640px) {
+        .hero {
+            height: calc(100vh - 100px); /* Adjust the height for smaller screens */
+        }
+
+        .full-height {
+            height: 30vh; /* Adjust the height for smaller screens */
+        }
+    }
 </style>
