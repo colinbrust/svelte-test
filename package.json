@@ -43,5 +43,8 @@
 		"vite": "^4.4.2",
 		"vite-plugin-iso-import": "^1.0.0"
 	},
-	"type": "module"
+	"type": "module",
+	"dependencies": {
+		"svelte-inview": "^4.0.1"
+	}
 }

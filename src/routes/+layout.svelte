@@ -11,7 +11,6 @@
     let btnClass = 'text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg text-xl p-2';
 
     function setActiveTab(tab: string) {
-        console.log(tab)
         activeTab = tab;
     };
 </script>
@@ -38,9 +37,7 @@
 </NavUl>
 </Navbar>
 
-
-    <slot></slot>
-
+<slot></slot>
 
 <Footer footerType="socialmedia" class="bg-gray-200 w-full">
     <div class="md:flex md:justify-between">
